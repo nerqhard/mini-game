@@ -10,7 +10,7 @@ class SocketClient {
 
   private constructor() {
     // Kiểm tra môi trường để xác định URL server
-    this.serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://192.168.68.76:3001';
+    this.serverUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
     this.connect();
   }
 
