@@ -6,19 +6,80 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 214, 219, 220;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-rgb: 0, 0, 0;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.dice-container {
+  perspective: 1000px;
+}
+
+.dice {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out;
+}
+
+.dice.rolling {
+  animation: shake 0.5s infinite;
+}
+
+@keyframes roll {
+  0% { 
+    transform: rotateX(0deg) rotateY(0deg) scale(1);
+    filter: blur(0px);
+  }
+  50% { 
+    transform: rotateX(180deg) rotateY(180deg) scale(1.2);
+    filter: blur(2px);
+  }
+  100% { 
+    transform: rotateX(360deg) rotateY(360deg) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Thêm hiệu ứng ánh sáng cho xúc xắc */
+.dice::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.dice:hover::before {
+  opacity: 1;
+}
+
+/* Thêm hiệu ứng shadow động */
+@keyframes shadow-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+  50% { box-shadow: 0 0 25px rgba(0,0,0,0.4); }
+}
+
+.dice-container {
+  animation: shadow-pulse 2s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-5deg); }
+  75% { transform: translateX(5px) rotate(5deg); }
 }
